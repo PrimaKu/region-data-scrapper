@@ -1,8 +1,11 @@
-import { getCities, getProvinces } from './func/api';
-import { saveCitiesToSQLFile, saveProvincesToSQLFile } from './func/file';
+import { ApiService } from './service/api';
+import { FileService } from './service/file';
 
-const provinces = await getProvinces();
-saveProvincesToSQLFile(provinces);
+const apiService = new ApiService();
+const fileService = new FileService();
 
-const cities = await getCities({ provinces });
-saveCitiesToSQLFile(cities);
+const provinces = await apiService.getProvinces();
+fileService.saveProvincesToSQLFile(provinces);
+
+const cities = await apiService.getCities(provinces);
+fileService.saveCitiesToSQLFile(cities);
