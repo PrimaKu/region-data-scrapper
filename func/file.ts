@@ -3,28 +3,27 @@ import path from 'path';
 import type { City } from '../class/city';
 import type { Province } from '../class/province';
 
-export const saveProvincesToSQLFile = (provinces: Province[]) => {
-  const filePath = path.join(__dirname, '../result/Province.sql');
-  const sqlStatements = provinces
-    .map(
-      (province) =>
-        `INSERT INTO Province (id, code, name) VALUES (${province.id}, '${province.code}', '${province.name}');`
-    )
-    .join('\n');
+const saveToSQLFile = (table: string, columns: string[], values: any[][], fileName: string) => {
+  const filePath = path.join(__dirname, `../result/${fileName}`);
+  const valuesString = values
+    .map((valueArray) => `(${valueArray.map((value) => `'${value}'`).join(', ')})`)
+    .join(',\n');
+  const sqlStatements = `INSERT INTO ${table} (${columns.join(', ')}) VALUES\n${valuesString};`;
 
   fs.writeFileSync(filePath, sqlStatements);
-  console.log(`Provinces saved to ${filePath}`);
+  console.log(`${table} saved to ${filePath}`);
+};
+
+export const saveProvincesToSQLFile = (provinces: Province[]) => {
+  const columns = ['id', 'code', 'name'];
+  const values = provinces.map(({ id, code, name }) => [id, code, name]);
+
+  saveToSQLFile('Province', columns, values, 'Province.sql');
 };
 
 export const saveCitiesToSQLFile = (cities: City[]) => {
-  const filePath = path.join(__dirname, '../result/City.sql');
-  const sqlStatements = cities
-    .map(
-      (city) =>
-        `INSERT INTO City (id, code, provinceId, name) VALUES (${city.id}, '${city.code}', '${city.provinceId}', ${city.name});`
-    )
-    .join('\n');
+  const columns = ['id', 'code', 'provinceId', 'name'];
+  const values = cities.map(({ id, code, provinceId, name }) => [id, code, provinceId, name]);
 
-  fs.writeFileSync(filePath, sqlStatements);
-  console.log(`Cities saved to ${filePath}`);
+  saveToSQLFile('City', columns, values, 'City.sql');
 };
