@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import { City } from '../class/city';
-import { Province } from '../class/province';
+import { City } from '../model/city';
+import { Province } from '../model/province';
 
 export class FileService {
   private readonly basePath = path.join(__dirname, '../result');

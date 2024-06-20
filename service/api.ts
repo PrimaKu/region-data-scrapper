@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { Province } from '../class/province';
-import { City } from '../class/city';
+import { Province } from '../model/province';
+import { City } from '../model/city';
 
 export class ApiService {
   private readonly axiosInstance;
