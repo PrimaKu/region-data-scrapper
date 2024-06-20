@@ -22,7 +22,6 @@ export const getProvinces = async ({ year = 2024, timeoutBeforeReq = 1000 } = {}
   for (const key in data) {
     const province = new Province({ id: provinceId++, key, name: data[key] });
     provinces.push(province);
-    // console.log({ province });
     console.log(`ID ${province.id} | Code ${province.code} | ${province.name}`);
   }
 
@@ -55,7 +54,6 @@ export const getCities = async ({
     for (const key in data) {
       const city = new City({ id: cityId++, key, name: data[key], province });
       cities.push(city);
-      // console.log({ city });
       console.log(`ID ${city.id} | Code ${city.code} | ${city.name}`);
     }
   }
