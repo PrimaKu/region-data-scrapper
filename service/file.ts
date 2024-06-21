@@ -10,14 +10,14 @@ export class FileService {
     const columns = ['id', 'code', 'name'];
     const values = provinces.map(({ id, code, name }) => [id, code, name]);
 
-    this.saveToSQLFile('Province', columns, values, 'Province.sql');
+    this.saveToSQLFile('provinces', columns, values, 'provinces.sql');
   }
 
   public saveCitiesToSQLFile(cities: City[]) {
-    const columns = ['id', 'code', 'provinceId', 'name'];
+    const columns = ['id', 'code', 'province_id', 'name'];
     const values = cities.map(({ id, code, province, name }) => [id, code, province.id, name]);
 
-    this.saveToSQLFile('City', columns, values, 'City.sql');
+    this.saveToSQLFile('cities', columns, values, 'cities.sql');
   }
 
   private saveToSQLFile(table: string, columns: string[], values: any[][], fileName: string) {

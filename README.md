@@ -12,8 +12,8 @@ bun index.ts
 
 The scrapped data will be saved as SQL files in `result` directory
 
-- Province.sql
-- City.sql
+- provinces.sql
+- cities.sql
 
 ### Source
 
