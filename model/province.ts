@@ -9,6 +9,6 @@ export class Province extends Base {
     super();
     this.id = id;
     this.code = key;
-    this.name = this.formatName(name);
+    this.name = this.titleCase(this.removeNewLine(name), ['DKI', 'DI']);
   }
 }

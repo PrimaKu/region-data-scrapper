@@ -21,7 +21,7 @@ export class City extends Base {
   }) {
     super();
     this.id = id;
-    this.name = this.formatName(name);
+    this.name = this.titleCase(this.removeNewLine(name));
     this.code = `${province.code}${key}`;
     this.provinceId = province.id;
     this.province = province;

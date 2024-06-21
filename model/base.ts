@@ -3,15 +3,15 @@ export class Base {
     return str.replace(/\n/g, ' ');
   }
 
-  titleCase(str: string) {
+  titleCase(str: string, whitelist?: string[]) {
     return str
-      .toLowerCase()
       .split(' ')
-      .map((word) => word[0].toUpperCase() + word.slice(1))
+      .map((word) => {
+        if (whitelist && whitelist.includes(word)) {
+          return word;
+        }
+        return word[0].toUpperCase() + word.slice(1).toLowerCase();
+      })
       .join(' ');
-  }
-
-  formatName(name: string) {
-    return this.titleCase(this.removeNewLine(name));
   }
 }
