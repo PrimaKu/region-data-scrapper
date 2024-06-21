@@ -19,7 +19,7 @@ export class City {
     province: Province;
   }) {
     this.id = id;
-    this.name = name;
+    this.name = name.replace(/\n/g, ' ');
     this.code = `${province.code}.${key}`;
     this.provinceId = province.id;
     this.province = province;

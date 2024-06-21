@@ -6,6 +6,6 @@ export class Province {
   constructor({ id, key, name }: { id: number; key: string; name: string }) {
     this.id = id;
     this.code = key;
-    this.name = name;
+    this.name = name.replace(/\n/g, ' ');
   }
 }
