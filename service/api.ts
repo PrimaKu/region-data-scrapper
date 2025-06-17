@@ -1,13 +1,14 @@
 import axios from 'axios';
 import { Province } from '../model/province';
 import { City } from '../model/city';
+import { District } from '../model/district';
 
 export class ApiService {
   private readonly axiosInstance;
   private readonly year: number;
   private readonly timeoutBeforeReq: number;
 
-  constructor(year = 2024, timeoutBeforeReq = 1000) {
+  constructor(year = 2024, timeoutBeforeReq = 100) {
     this.axiosInstance = axios.create({
       baseURL: 'https://sipedas.pertanian.go.id',
     });
@@ -60,6 +61,32 @@ export class ApiService {
     }
 
     return cities;
+  }
+
+  public async getDistricts(cities: City[]): Promise<District[]> {
+    const districts: District[] = [];
+    let districtId = 1;
+
+    for (const city of cities) {
+      console.log(`Getting districts of ${city.name}...`);
+      await this.delay();
+
+      const { data } = await this.axiosInstance.get('/api/wilayah/list_kec', {
+        params: {
+          thn: this.year,
+          pro: city.province.code,
+          kab: city.code.replace(city.province.code, ''),
+        },
+      });
+
+      for (const key in data) {
+        const district = new District({ id: districtId++, key, name: data[key], city});
+        districts.push(district);
+        console.log(`ID ${district.id} | Code ${district.code} | ${district.name}`);
+      }
+    }
+
+    return districts;
   }
 
   /**

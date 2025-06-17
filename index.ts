@@ -9,3 +9,6 @@ fileService.saveProvincesToSQLFile(provinces);
 
 const cities = await apiService.getCities(provinces);
 fileService.saveCitiesToSQLFile(cities);
+
+const districts = await apiService.getDistricts(cities);
+fileService.saveDistrictsToSQLFile(districts);

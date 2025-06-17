@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { City } from '../model/city';
+import { District } from '../model/district';
 import { Province } from '../model/province';
 
 export class FileService {
@@ -18,6 +19,13 @@ export class FileService {
     const values = cities.map(({ id, code, province, name }) => [id, code, province.id, name]);
 
     this.saveToSQLFile('cities', columns, values, 'cities.sql');
+  }
+
+  public saveDistrictsToSQLFile(districts: District[]) {
+    const columns = ['id', 'code', 'city_id', 'name'];
+    const values = districts.map(({ id, code, city, name }) => [id, code, city.id, name]);
+
+    this.saveToSQLFile('districts', columns, values, 'districts.sql');
   }
 
   private saveToSQLFile(table: string, columns: string[], values: any[][], fileName: string) {
